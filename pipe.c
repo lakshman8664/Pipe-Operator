@@ -6,14 +6,13 @@
 
 int main(int argc, char *argv[])
 {
-	// printf("Number of command-line arguments: %d\n", argc);
-
-	// //print each command line argument
-	// for(int i = 0; i < argc; i++){
-	// 	printf("Argument %d: %s\n", i, argv[i]);
-	// }
-
-	// execlp(argv[1], argv[1], NULL);
+	// base case for only 1 argument 
+	if (argc == 2){
+		if (execlp(argv[1], argv[1], NULL) == -1) {
+            perror("execlp");
+            exit(1);
+        }
+	}
 
 	int fds[2];		// initialize an integer array of size 2
 	pipe(fds);	// creates a pipe, the pipefd passed inside will be 
