@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
                       // modified to store the read/write fd of the pipe
                       // pipefd[0] is the read end, pipefd[1] is the write end
 
-	for(int i = 1; i < argc; i++){
+	for(int i = 1; i < argc + 1; i++){
 		int pid = fork();
-		
+
 		//if fork() failed, throw error 
 		if (pid == -1) {
 			perror("fork");
