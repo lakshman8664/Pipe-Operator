@@ -53,8 +53,9 @@ int main(int argc, char *argv[])
 
 			// redirect output to pipe (all except last case)
 			if(i != argc - 1){
-				dup2(fds[1], STDOUT_FILENO); //redirect command's output from standard output -> pipe buffer
 				printf("redirect output from stdout to pipe\n");
+				dup2(fds[1], STDOUT_FILENO); //redirect command's output from standard output -> pipe buffer
+				
 			}
 			
 			close(fds[0]); //closes read (not needed)
