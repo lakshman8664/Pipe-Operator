@@ -61,15 +61,18 @@ int main(int argc, char *argv[])
 			close(fds[0]); //closes read (not needed)
 			close(fds[1]); //no longer needed 
 
-			
-	
-			execlp(argv[i], argv[i], NULL); //run cmd 1
+			if (execlp(argv[i], argv[i], NULL) == -1) {
+				perror("execlp");
+				exit(EXIT_FAILURE);
+			}
+
 		}
 		else if (child_pid > 0){
 
 			// printf("Iteration: %d (parent).\n", i);
 
-			dup2(fds[0], STDIN_FILENO); //redirect input of second arg to take in from pipe buffer 
+			dup2(fds[0], STDIN_FILENO); //redirect input of second arg to take in from pipe buffer (child will automatically do this when next iteration forks)
+
 			close(fds[1]); //close write (not needed)
 			close(fds[0]); //no longer needed 
 			
