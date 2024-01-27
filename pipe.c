@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 		if (child_pid == 0){
 			// redirect input from STDIN to reading from old pipe (all except first case )
 
-			printf("Iteration : %d\n", i);
+			printf("Iteration: %d (child).\n", i);
 
 			if (i != 1){
 				dup2(fds[0], STDIN_FILENO);
@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
 			execlp(argv[i], argv[i], NULL); //run cmd 1
 		}
 		else if (child_pid > 0){
+
+			printf("Iteration: %d (parent).\n", i);
 
 			dup2(fds[0], STDIN_FILENO); //redirect input of second arg to take in from pipe buffer 
 			close(fds[1]); //close write (not needed)
