@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 { 
 
-	printf("argc length: %d\n", argc);
+	// printf("argc length: %d\n", argc);
 
 	if (argc == 2){
 		// printf("this line should only run if there is 1 command provided.\n");
