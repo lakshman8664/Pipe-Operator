@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
 
 			printf("Running command : %s\n", argv[i]);
 
-			if (i != 1){
-				dup2(fds[0], STDIN_FILENO);
-				printf("redirect input from STDIN to reading from old pipe\n");
-			} 
+			// if (i != 1){
+			// 	dup2(fds[0], STDIN_FILENO);
+			// 	printf("redirect input from STDIN to reading from old pipe\n");
+			// } 
 			
 
 			// redirect output to pipe (all except last case)
