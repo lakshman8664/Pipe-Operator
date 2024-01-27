@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 			close(fds[0]); //closes read (not needed)
 			close(fds[1]); //no longer needed 
 
-			if (execlp(argv[i], argv[i], NULL) == -1) {
+			if (execlp(argv[i], argv[i], NULL) < 0) {
 				perror("bogus");
 				exit(EXIT_FAILURE);
 			}
