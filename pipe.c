@@ -17,9 +17,12 @@ int main(int argc, char *argv[])
 
 	for (int i = 1; i < argc; i++){
 
-		if (i != argc -1){ //if last cmd, don't create pipe (skip this step)		
-			pipe(fds);	// creates a pipe, the pipefd passed inside will be 
-							// pipefd[0] is the read end, pipefd[1] is the write end
+		if (i != argc - 1){ //if last cmd, don't create pipe (skip this step)		
+			printf("creating pipe\n");
+			if (pipe(fds) == -1){  // creates a pipe, the pipefd passed inside will be. pipefd[0] is the read end, pipefd[1] is the write end
+				perror("pipe");
+				exit(EXIT_FAILURE);
+			};	
 		}
 		
 		int child_pid = fork();
@@ -33,18 +36,26 @@ int main(int argc, char *argv[])
 		// child processs 
 		if (child_pid == 0){
 			// redirect input from STDIN to reading from old pipe (all except first case )
+
+			printf("Iteration : %s\n", i);
+
 			if (i != 1){
 				dup2(fds[0], STDIN_FILENO);
+				printf("redirect input from STDIN to reading from old pipe\n");
 			} 
+			
 
 			// redirect output to pipe (all except last case)
 			if(i != argc - 1){
 				dup2(fds[1], STDOUT_FILENO); //redirect command's output from standard output -> pipe buffer
+				printf("redirect output from stdout to pipe\n");
 			}
 			
 			close(fds[0]); //closes read (not needed)
 			close(fds[1]); //no longer needed 
-			
+
+			printf("Running command : %s\n", argv[i]);
+	
 			execlp(argv[i], argv[i], NULL); //run cmd 1
 		}
 		else if (child_pid > 0){
@@ -55,6 +66,7 @@ int main(int argc, char *argv[])
 			
 			wait(NULL);
 		}
+		printf("Iteration : %s finished.\n", i);
 	}
 
 	
