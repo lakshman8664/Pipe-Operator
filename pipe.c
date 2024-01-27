@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 		// printf("this line should only run if there is 1 command provided.\n");
 		if (execlp(argv[1], argv[1], NULL) == -1) {
             perror("execlp");
-            exit(1);
+            exit(EXIT_FAILURE);
         }
 	}
 
