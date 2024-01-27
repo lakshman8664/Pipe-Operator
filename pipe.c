@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 				exit(EXIT_FAILURE);
 			};	
 		}
-		
+		int status;
 		int child_pid = fork();
 
 		if (child_pid == -1) {
@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
 		else if (child_pid > 0){
 
 			// printf("Iteration: %d (parent).\n", i);
+			
+
+
 
 			dup2(fds[0], STDIN_FILENO); //redirect input of second arg to take in from pipe buffer (child will automatically do this when next iteration forks)
 
@@ -77,6 +80,13 @@ int main(int argc, char *argv[])
 			close(fds[0]); //no longer needed 
 			
 			wait(NULL);
+
+			waitpid(child_pid, &status, 0);
+			if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+				//fprintf(stderr, "Child process failed with status %d\n", WEXITSTATUS(status));
+				perror("child process failed.");
+				exit(EXIT_FAILURE);
+			}
 		}
 		// printf("Iteration : %d finished.\n", i);
 	}
