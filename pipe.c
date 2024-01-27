@@ -79,12 +79,11 @@ int main(int argc, char *argv[])
 			close(fds[1]); //close write (not needed)
 			close(fds[0]); //no longer needed 
 			
-			// wait(NULL);
 
 			waitpid(child_pid, &status, 0);
 			if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
 				//fprintf(stderr, "Child process failed with status %d\n", WEXITSTATUS(status));
-				perror("child process failed.");
+				// perror("child process failed.");
 				exit(EXIT_FAILURE);
 			}
 		}
