@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 		if (child_pid == 0){
 			// redirect input from STDIN to reading from old pipe (all except first case )
 
-			printf("Iteration : %s\n", i);
+			printf("Iteration : %d\n", i);
 
 			if (i != 1){
 				dup2(fds[0], STDIN_FILENO);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 			
 			wait(NULL);
 		}
-		printf("Iteration : %s finished.\n", i);
+		printf("Iteration : %d finished.\n", i);
 	}
 
 	
