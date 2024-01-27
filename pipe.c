@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
 
 			printf("Iteration: %d (child).\n", i);
 
+			printf("Running command : %s\n", argv[i]);
+
 			if (i != 1){
 				dup2(fds[0], STDIN_FILENO);
 				printf("redirect input from STDIN to reading from old pipe\n");
@@ -58,7 +60,7 @@ int main(int argc, char *argv[])
 			close(fds[0]); //closes read (not needed)
 			close(fds[1]); //no longer needed 
 
-			printf("Running command : %s\n", argv[i]);
+			
 	
 			execlp(argv[i], argv[i], NULL); //run cmd 1
 		}
