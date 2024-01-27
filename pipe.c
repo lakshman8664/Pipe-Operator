@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	if (argc == 2){
 		// printf("this line should only run if there is 1 command provided.\n");
 		if (execlp(argv[1], argv[1], NULL) == -1) {
-            perror("execlp");
+            perror("bogus");
             exit(EXIT_FAILURE);
         }
 	}
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
 		if (child_pid == -1) {
 			perror("fork");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 			close(fds[1]); //no longer needed 
 
 			if (execlp(argv[i], argv[i], NULL) == -1) {
-				perror("execlp");
+				perror("bogus");
 				exit(EXIT_FAILURE);
 			}
 
