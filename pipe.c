@@ -9,6 +9,11 @@ int main(int argc, char *argv[])
 
 	// printf("argc length: %d\n", argc);
 
+	if(argc == 1){
+		perror("No arguments");
+        exit(EXIT_FAILURE);
+	}
+
 	if (argc == 2){
 		// printf("this line should only run if there is 1 command provided.\n");
 		if (execlp(argv[1], argv[1], NULL) == -1) {
@@ -39,18 +44,7 @@ int main(int argc, char *argv[])
 
 		// child processs 
 		if (child_pid == 0){
-			// redirect input from STDIN to reading from old pipe (all except first case )
-
-			// printf("Iteration: %d (child).\n", i);
-
-			// printf("Running command : %s\n", argv[i]);
-
-			// if (i != 1){
-			// 	dup2(fds[0], STDIN_FILENO);
-			// 	printf("redirect input from STDIN to reading from old pipe\n");
-			// } 
 			
-
 			// redirect output to pipe (all except last case)
 			if(i != argc - 1){
 				// printf("redirect output from stdout to pipe\n");
@@ -70,15 +64,11 @@ int main(int argc, char *argv[])
 		else if (child_pid > 0){
 
 			// printf("Iteration: %d (parent).\n", i);
-			
-
-
 
 			dup2(fds[0], STDIN_FILENO); //redirect input of second arg to take in from pipe buffer (child will automatically do this when next iteration forks)
 
 			close(fds[1]); //close write (not needed)
 			close(fds[0]); //no longer needed 
-			
 
 			waitpid(child_pid, &status, 0);
 			if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
