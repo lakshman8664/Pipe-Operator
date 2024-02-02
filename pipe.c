@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 int main(int argc, char *argv[])
 { 
@@ -10,15 +11,16 @@ int main(int argc, char *argv[])
 	// printf("argc length: %d\n", argc);
 
 	if(argc == 1){
+		errno = EINVAL;
 		perror("No arguments");
-        exit(EXIT_FAILURE);
+        exit(errno);
 	}
 
 	if (argc == 2){
 		// printf("this line should only run if there is 1 command provided.\n");
 		if (execlp(argv[1], argv[1], NULL) == -1) {
-            perror("bogus");
-            exit(EXIT_FAILURE);
+            perror("bogus argument");
+            exit(errno);
         }
 	}
 
@@ -30,7 +32,7 @@ int main(int argc, char *argv[])
 			// printf("creating pipe\n");
 			if (pipe(fds) == -1){  // creates a pipe, the pipefd passed inside will be. pipefd[0] is the read end, pipefd[1] is the write end
 				perror("pipe");
-				exit(EXIT_FAILURE);
+				exit(errno);
 			};	
 		}
 		int status;
@@ -38,7 +40,7 @@ int main(int argc, char *argv[])
 
 		if (child_pid == -1) {
 			perror("fork");
-			exit(EXIT_FAILURE);
+			exit(errno);
 		}
 
 
@@ -57,7 +59,7 @@ int main(int argc, char *argv[])
 
 			if (execlp(argv[i], argv[i], NULL) < 0) {
 				perror("bogus");
-				exit(EXIT_FAILURE);
+				exit(errno);
 			}
 
 		}
@@ -72,9 +74,8 @@ int main(int argc, char *argv[])
 
 			waitpid(child_pid, &status, 0);
 			if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
-				//fprintf(stderr, "Child process failed with status %d\n", WEXITSTATUS(status));
-				// perror("child process failed.");
-				exit(EXIT_FAILURE);
+				// SET errno to macro 
+				exit(errno);
 			}
 		}
 		// printf("Iteration : %d finished.\n", i);
