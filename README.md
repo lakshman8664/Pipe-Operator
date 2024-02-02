@@ -1,22 +1,19 @@
-## UID: 123456789
+## UID: 905699395
 
 ## Pipe Up
 
-One sentence description
+This goal of this lab is to implement a pipe operator for chaining multiple commands, allowing output of one command to serve as input to the next, similar to the Unix pipe mechanism.
 
 ## Building
 
-Explain briefly how to build your program
-
 Go to directory containing source code and Makefile. 
-Run 'make'
-run './pipe [commands...]'
-
+Run 'make'. (this compiles the source code and generates an executable named 'pipe')
 
 ## Running
 
-Show an example run of your program, using at least two additional arguments, and what to expect
+To run the program, use the syntax `./pipe [command1] [command2...]`
+For example, `./pipe` ls cat wc' is equivalent to `ls|cat|wc|`, so both will output the word count of the directory. 
 
 ## Cleaning up
 
-Explain briefly how to clean up all binary files
+To clean up and remove binary files, run `make clean`. This command removes the pipe executable and any object files generated during the build process.
