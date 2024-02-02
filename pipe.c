@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 			waitpid(child_pid, &status, 0);
 			if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
 				// SET errno to macro 
-				exit(errno);
+				exit(WEXITSTATUS(status));
 			}
 		}
 		// printf("Iteration : %d finished.\n", i);
