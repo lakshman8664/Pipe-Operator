@@ -1,6 +1,4 @@
-## UID: 905699395
-
-## Pipe Up
+## Pipe Operator
 
 This goal of this lab is to implement a pipe operator for chaining multiple commands, allowing output of one command to serve as input to the next, similar to the Unix pipe mechanism.
 
